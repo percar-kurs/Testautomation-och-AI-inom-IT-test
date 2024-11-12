@@ -21,7 +21,7 @@ test('Login with Markus, valid pw', async ({ page }) =>
 	expect(header).toBe("Store");
 
 	const username = await storePage.usernameText.textContent();
-	//expect(username).toContain("Markus");
+	expect(username).toContain("Markus");
 	// expect(storePage.usernameText).toHaveText("Markus");
 
 

@@ -12,8 +12,4 @@ export class StorePage
 		this.header = page.locator("h1")
 	}
 
-
-
-
-
 }
