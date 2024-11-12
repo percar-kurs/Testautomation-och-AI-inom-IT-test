@@ -7,11 +7,16 @@ test('Login with Markus, valid pw', async ({ page }) =>
 	const loginPage = new LoginPage(page);
 	const storePage = new StorePage(page);
 
-	const validPassword =  process.env.PASSWORD;
+/*
+	if (process.env.PASSWORD !== undefined){
+		const validPassword =  process.env.PASSWORD;
+	}
+*/
+	
 
 
 	await page.goto("http://hoff.is/login");
-	await loginPage.login("Markus", "sup3rs3cr3t", "consumer");
+	await loginPage.login("Markus", 'sup3rs3cr3t', "consumer");
 
 	const header = await storePage.header.textContent();
 	expect(header).toBe("Store");
