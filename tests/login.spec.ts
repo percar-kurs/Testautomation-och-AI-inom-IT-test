@@ -20,6 +20,7 @@ test('Login with Markus, valid pw', async ({ page }) =>
 	const header = await storePage.header.textContent();
 	expect(header).toBe("Store");
 
+	await page.waitForTimeout(1000);
 	const username = await storePage.usernameText.textContent();
 	expect(username).toContain("Markus");
 	// expect(storePage.usernameText).toHaveText("Markus");
