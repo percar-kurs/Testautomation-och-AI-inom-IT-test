@@ -24,6 +24,4 @@ export class LoginPage
 		await this.chooseUser.selectOption(userType);
 		await this.submitButton.click();
 	}
-
-
 }
