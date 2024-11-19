@@ -3,58 +3,28 @@ import { LoginPage } from "../pages/loginpage";
 import { StorePage } from "../pages/storepage";
 
 
-test('Login with Markus, get header', async ({ page }) =>
-	{
-		const loginPage = new LoginPage(page);
-		const storePage = new StorePage(page);
-	
-		let validPassword;
-		if (process.env.PASSWORD !== undefined){
-			 validPassword =  process.env.PASSWORD;
-		}
-		
-		await page.goto("http://hoff.is/login");
-		await loginPage.login("Markus", 'sup3rs3cr3t', "consumer");
-	
-		await page.waitForTimeout(5000); // wait for page to be loaded
-		
-		const h1 = await page.locator('h1');
-		await expect(h1).toBeVisible();
-		const h1Text = await h1.textContent();
-
-		await page.waitForTimeout(20000); // wait for page to be loaded
-		expect(h1Text).toBe('Store');
-
-	});
-
-
-
-test('Login with Markus, valid pw', async ({ page }) =>
+test('Login with Markus, Store opens and Username is Markus', async ({ page }) =>
 {
 	const loginPage = new LoginPage(page);
 	const storePage = new StorePage(page);
-
 
 	let validPassword;
 	if (process.env.PASSWORD !== undefined){
 		 validPassword =  process.env.PASSWORD;
 	}
-
 	
 	await page.goto("http://hoff.is/login");
-	await loginPage.login("Markus", 'sup3rs3cr3t', "consumer");
-	await page.waitForTimeout(2000); // wait for page to be loaded
+	await loginPage.login("Markus", validPassword, "consumer");
+	await page.waitForTimeout(1000); // wait for page to be loaded
 
 	const header = await storePage.header.textContent();
 	expect(header).toBe("Store");
 
 	const username = await storePage.usernameText.textContent();
 	expect(username).toContain("Markus");
-	
-	
 });
 
-test('Login that fails', async ({ page }) =>
+test('Login with faulty password,  fails with error message', async ({ page }) =>
 {
 	const loginPage = new LoginPage(page);
 	const storePage = new StorePage(page);
@@ -66,4 +36,47 @@ test('Login that fails', async ({ page }) =>
 	expect(errorMessage).toBe('Incorrect password');
 
 });
+
+
+test('When login with faulty password,  Then fail with error message', async ({ page }) =>
+	{
+		const loginPage = new LoginPage(page);
+		const storePage = new StorePage(page);
+	
+		await page.goto("http://hoff.is/login");
+		await loginPage.login("asdf", "asdf", "consumer");
+	
+		const errorMessage = await loginPage.errorMessage.textContent();
+		expect(errorMessage).toBe('Incorrect password');
+	
+	});
+
+
+
+	test('When Login with valid password then logout, Then user is back on login page', async ({ page }) =>
+		{
+			const loginPage = new LoginPage(page);
+			const storePage = new StorePage(page);
+		
+			let validPassword;
+			if (process.env.PASSWORD !== undefined){
+				 validPassword =  process.env.PASSWORD;
+			}
+			
+			await page.goto("http://hoff.is/login");
+			await loginPage.login("Markus", validPassword, "consumer");
+			await page.waitForTimeout(1000); // wait for page to be loaded
+		
+			const username = await storePage.usernameText.textContent();
+			expect(username).toContain("Markus");
+
+			expect(storePage.usernameText).toContainText('Markus');
+
+			await storePage.logoutButton.isVisible();
+			await storePage.logoutButton.click();
+
+			expect(loginPage.usernameInput).toBeVisible();
+
+
+		});
 
