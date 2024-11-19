@@ -17,11 +17,11 @@ test('Login with Markus, valid pw', async ({ page }) =>
 	
 	await page.goto("http://hoff.is/login");
 	await loginPage.login("Markus", validPassword, "consumer");
-
+	await page.waitForTimeout(2000); // wait for page to be loaded
 	const header = await storePage.header.textContent();
 	expect(header).toBe("Store");
 
-	await page.waitForTimeout(1000); // wait for page to be loaded
+
 	const username = await storePage.usernameText.textContent();
 	expect(username).toContain("Markus");
 	// expect(storePage.usernameText).toHaveText("Markus");
