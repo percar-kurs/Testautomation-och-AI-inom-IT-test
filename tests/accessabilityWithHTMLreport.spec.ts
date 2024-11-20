@@ -24,7 +24,7 @@ test.describe('Accessability test', () =>
 		});
 
 		// attach html report
-		await testInfo.attach('accessibility-scan-results', {
+		await testInfo.attach('accessibility-html-report', {
 			body: reportHTML,
 			contentType: 'text/html',
 		});
