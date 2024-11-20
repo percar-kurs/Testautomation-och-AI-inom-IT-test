@@ -15,7 +15,7 @@ test('When Login with valid password and logout, Then user is back on login page
 
 	await page.goto("http://hoff.is/login");
 	await loginPage.login("Markus", validPassword, "consumer");
-	await page.waitForTimeout(1000); // wait for page to be loaded
+	await page.waitForTimeout(2000); // wait for page to be loaded
 
 	const header = await storePage.header;
 	expect(header).toBeVisible();

@@ -6,7 +6,7 @@ import { createHtmlReport } from 'axe-html-reporter';
 test.describe('Accessability test', () =>
 {
 
-	test('Accessability test for http://hoff.is/login', async ({ page }, testInfo) =>
+	test('Accessability test for http://hoff.is/login - with HTML-report', async ({ page }, testInfo) =>
 	{
 
 		await page.goto('http://hoff.is/login');

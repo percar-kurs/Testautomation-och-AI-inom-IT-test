@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 
-test('example with attachment', async ({ page }, testInfo) =>
+test('Accessability - json report attached', async ({ page }, testInfo) =>
 {
 	// Navigate to the page
 	await page.goto('http://hoff.is/login');
