@@ -14,7 +14,6 @@ test.afterEach(async ({ page }, testInfo) => {
   test.beforeEach(async ({ page, context }) => {
     // Enable video recording for each test
     await context.tracing.start({ screenshots: true, snapshots: true });
-    await context.tracing.start();
   });
 
 test('When Login with Markus, Then store opens and Username is Markus', async ({ page }) =>
@@ -78,6 +77,9 @@ test('When Login with valid password and logout, Then user is back on login page
 
 	const logoutButton = await storePage.logoutButton;
 	await storePage.logoutButton.click();
+
+
+	await page.waitForLoadState('networkidle'); // Wait for network activity to stabilize
 
 	// back on login page
 	await page.waitForTimeout(1000); // wait for page to be loaded
