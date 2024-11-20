@@ -51,7 +51,7 @@ test('When Login with valid password and logout, Then user is back on login page
 	{
 		validPassword = process.env.PASSWORD;
 	}
-	validPassword = 'sup3rs3cr3t';
+	//validPassword = 'sup3rs3cr3t';
 
 	await page.goto("http://hoff.is/login");
 	await loginPage.login("Markus", validPassword, "consumer");
