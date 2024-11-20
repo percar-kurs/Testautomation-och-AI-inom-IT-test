@@ -34,7 +34,7 @@ test('Create student using API', async () =>
 	expect(responseGetJson.age).toBe(student.age);
 });
 
-test.only('Create student then delete', async () =>
+test('Create student then delete', async () =>
 {
 	const student = {
 		age: "99",
