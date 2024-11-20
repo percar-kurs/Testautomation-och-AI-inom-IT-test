@@ -2,19 +2,54 @@ import { expect, test } from "@playwright/test";
 import { LoginPage } from "../pages/loginpage";
 import { StorePage } from "../pages/storepage";
 
+
+import fs from 'fs';
+import path from 'path';
+
+// Ensure the screenshots directory exists
+const screenshotsDir = 'screenshots';
+if (!fs.existsSync(screenshotsDir)) {
+  fs.mkdirSync(screenshotsDir, { recursive: true });
+}
+
 test.afterEach(async ({ page }, testInfo) => {
-    if (testInfo.status === 'failed') {
-      // Capture a screenshot
-      const screenshotPath = `screenshots/${testInfo.title.replace(/\s+/g, '_')}.png`;
-      await page.screenshot({ path: screenshotPath });
-      console.log(`Screenshot saved: ${screenshotPath}`);
-    }
+  if (testInfo.status === 'failed') {
+    // Capture a screenshot
+    const screenshotPath = path.join(screenshotsDir, `${testInfo.title.replace(/\s+/g, '_')}.png`);
+    await page.screenshot({ path: screenshotPath });
+
+    // Attach the screenshot to the report
+    testInfo.attachments.push({
+      name: 'screenshot',
+      path: screenshotPath,
+      contentType: 'image/png',
+    });
+
+    console.log(`Screenshot saved: ${screenshotPath}`);
+  }
+});
+
+test.beforeEach(async ({ page, context }) => {
+  // Enable tracing for each test
+  await context.tracing.start({ screenshots: true, snapshots: true });
+});
+
+test.afterAll(async ({ context }, testInfo) => {
+  // Save the trace after all tests are done
+  const tracePath = `traces/${testInfo.title.replace(/\s+/g, '_')}.zip`;
+  await context.tracing.stop({ path: tracePath });
+
+  // Attach the trace to the report
+  testInfo.attachments.push({
+    name: 'trace',
+    path: tracePath,
+    contentType: 'application/zip',
   });
 
-  test.beforeEach(async ({ page, context }) => {
-    // Enable video recording for each test
-    await context.tracing.start({ screenshots: true, snapshots: true });
-  });
+  console.log(`Trace saved: ${tracePath}`);
+});
+
+// ********************************************
 
 test('When Login with Markus, Then store opens and Username is Markus', async ({ page }) =>
 {
