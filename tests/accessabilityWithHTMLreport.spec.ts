@@ -8,7 +8,7 @@ import { StorePage } from "../pages/storepage";
 test.describe('Accessability test', () =>
 {
 
-	test('Accessability test for http://hoff.is/login - with HTML-report', async ({ page }, testInfo) =>
+	test('Accessability test for http://hoff.is/login - with HTML-report', async ({ page, browserName }, testInfo) =>
 	{
 
 		await page.goto('http://hoff.is/login');
@@ -26,7 +26,7 @@ test.describe('Accessability test', () =>
 		});
 
 		// attach html report
-		await testInfo.attach('accessibility-login-html-report', {
+		await testInfo.attach(`accessibility-login-html-report-${browserName}`, {
 			body: reportHTML,
 			contentType: 'text/html',
 		});
@@ -35,7 +35,7 @@ test.describe('Accessability test', () =>
 
 	});
 
-	test('Accessability test for http://hoff.is/store- with HTML-report', async ({ page }, testInfo) =>
+	test('Accessability test for http://hoff.is/store- with HTML-report', async ({ page, browserName }, testInfo) =>
 	{
 		const loginPage = new LoginPage(page);
 		const storePage = new StorePage(page);
@@ -67,7 +67,7 @@ test.describe('Accessability test', () =>
 		});
 
 		// attach html report
-		await testInfo.attach('accessibility-store-html-report', {
+		await testInfo.attach(`accessibility-store-html-report-${browserName}`, {
 			body: reportHTML,
 			contentType: 'text/html',
 		});
