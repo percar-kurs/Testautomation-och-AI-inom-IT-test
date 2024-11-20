@@ -41,7 +41,7 @@ test('When login with faulty password,  Then fail with error message', async ({ 
 
 
 
-test.only('When Login with valid password and logout, Then user is back on login page', async ({ page }) =>
+test('When Login with valid password and logout, Then user is back on login page', async ({ page }) =>
 {
 	const loginPage = new LoginPage(page);
 	const storePage = new StorePage(page);
