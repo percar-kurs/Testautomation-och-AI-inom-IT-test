@@ -2,6 +2,20 @@ import { expect, test } from "@playwright/test";
 import { LoginPage } from "../pages/loginpage";
 import { StorePage } from "../pages/storepage";
 
+test.afterEach(async ({ page }, testInfo) => {
+    if (testInfo.status === 'failed') {
+      // Capture a screenshot
+      const screenshotPath = `screenshots/${testInfo.title.replace(/\s+/g, '_')}.png`;
+      await page.screenshot({ path: screenshotPath });
+      console.log(`Screenshot saved: ${screenshotPath}`);
+    }
+  });
+
+  test.beforeEach(async ({ page, context }) => {
+    // Enable video recording for each test
+    await context.tracing.start({ screenshots: true, snapshots: true });
+    await context.tracing.start();
+  });
 
 test('When Login with Markus, Then store opens and Username is Markus', async ({ page }) =>
 {
