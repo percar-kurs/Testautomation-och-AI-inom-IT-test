@@ -85,7 +85,7 @@ test('When Login with valid password and logout, Then user is back on login page
 	await page.waitForTimeout(1000); // wait for page to be loaded
 	const usernameInput = await loginPage.usernameInput
 
-	expect(usernameInput).toBeVisible();
+	expect(usernameInput).toBeEditable();
 
 });
 
