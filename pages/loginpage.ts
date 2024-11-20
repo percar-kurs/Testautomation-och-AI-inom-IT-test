@@ -8,10 +8,14 @@ export class LoginPage
 	readonly submitButton: Locator;
 	readonly errorMessage: Locator;
 	readonly chooseUser: Locator;
+	readonly pageTitle: Locator;
+
+
 
 	constructor(page: Page)
 	{
 		this.page = page;
+		this.pageTitle = page.locator('title');
 		this.usernameInput = page.getByLabel("Username");
 		this.passwordInput = page.getByLabel("Password");
 		this.submitButton = page.getByRole('button'), { name: "Login" };
