@@ -3,6 +3,7 @@ import { LoginPage } from "../pages/loginpage";
 import { StorePage } from "../pages/storepage";
 
 
+
 test('When Login with Markus, Then store opens and Username is Markus', async ({ page }) =>
 {
 	const loginPage = new LoginPage(page);
@@ -29,13 +30,12 @@ test('When Login with Markus, Then store opens and Username is Markus', async ({
 test('When login with faulty password,  Then fail with error message', async ({ page }) =>
 {
 	const loginPage = new LoginPage(page);
-	const storePage = new StorePage(page);
 
 	await page.goto("http://hoff.is/login");
 	await loginPage.login("asdf", "asdf", "consumer");
 
 	const errorMessage = await loginPage.errorMessage.textContent();
-	expect(errorMessage).toBe('Incorrect password');
+	expect(errorMessage, 'Expected errormessage: '+errorMessage).toBe('Incorrect password');
 
 });
 

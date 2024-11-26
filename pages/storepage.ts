@@ -19,4 +19,10 @@ export class StorePage
 		});
 	}
 
+    async getUserName(){
+        this.page.waitForTimeout(200)
+        return this.usernameText.textContent()
+    }
+
+
 }
