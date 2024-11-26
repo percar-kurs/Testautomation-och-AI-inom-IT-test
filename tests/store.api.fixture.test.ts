@@ -1,4 +1,4 @@
-import { test, expect } from './store.api.fixture';
+import { test, expect } from '../fixtures/store.api.fixture';
 
 
 type productType = { id: number; price: number; vat: number; name: string }
