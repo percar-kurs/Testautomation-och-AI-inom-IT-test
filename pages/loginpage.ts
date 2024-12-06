@@ -10,8 +10,6 @@ export class LoginPage
 	readonly chooseUser: Locator;
 	readonly pageTitle: Locator;
 
-
-
 	constructor(page: Page)
 	{
 		this.page = page;
