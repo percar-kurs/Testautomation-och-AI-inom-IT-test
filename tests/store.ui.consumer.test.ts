@@ -26,8 +26,8 @@ for(const product of productListUI)
 {
 	// Calculate prices and VAT by %
 	const totalSum = quantity * product.price;
-	const VATpercentage: number = product.vat / product.price;
-	const VATpercentageRounded = parseFloat(VATpercentage.toFixed(1));
+	//const VATpercentage: number = product.vat / product.price;
+	//const VATpercentageRounded = parseFloat(VATpercentage.toFixed(1));
 	const totalVAT = product.vat * quantity;
 	const grandTotal = quantity * product.price;
 
