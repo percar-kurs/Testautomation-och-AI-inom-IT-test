@@ -24,9 +24,10 @@ test('When requesting products list, for each products data, validate properties
 		// console.log(productDataJson);
 
 		// validate valid productType
-		expect(productDataJson, `Should ${productDataJson.number} be a number`).toHaveProperty('id', expect.any(Number));
-		expect(productDataJson, `Should ${productDataJson.price} be a price`).toHaveProperty('price', expect.any(Number));
-		expect(productDataJson, `Should ${productDataJson.vat} be a vat`).toHaveProperty('vat', expect.any(Number));
-		expect(productDataJson, `Should ${productDataJson.name} be a name`).toHaveProperty('name', expect.any(String));
+		
+		expect(productDataJson, `Should ${productDataJson.name}: id be a number`).toHaveProperty('id', expect.any(Number));
+		expect(productDataJson, `Should ${productDataJson.name}: price be a number`).toHaveProperty('price', expect.any(Number));
+		expect(productDataJson, `Should ${productDataJson.name}: vat be a number`).toHaveProperty('vat', expect.any(Number));
+		expect(productDataJson, `Should ${productDataJson.name}: name  be a string`).toHaveProperty('name', expect.any(String));
 	}
 });
