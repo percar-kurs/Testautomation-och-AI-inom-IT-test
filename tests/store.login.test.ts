@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { LoginPage } from "../pages/loginpage";
 import { StorePage } from "../pages/storepage";
 
-test('When Login with Markus, Then store opens and Username is Markus', async ({ page }) =>
+test('When Login as user, Then store opens and Username is displayed', async ({ page }) =>
 {
 	const loginPage = new LoginPage(page);
 	const storePage = new StorePage(page);
@@ -13,7 +13,7 @@ test('When Login with Markus, Then store opens and Username is Markus', async ({
 		validPassword = process.env.PASSWORD;
 	}
 
-	const userName = "Namnet";
+	const userName = "Användarnamnet";
 
 	await page.goto("http://hoff.is/login");
 	await loginPage.login(userName, validPassword, "consumer");
@@ -51,7 +51,7 @@ test('When Login with valid password and logout, Then user is back on login page
 		validPassword = process.env.PASSWORD;
 	}
 
-	const userName = "Namnet";
+	const userName = "Användarnamnet";
 
 	await page.goto("http://hoff.is/login");
 	await loginPage.login(userName, validPassword, "consumer");
