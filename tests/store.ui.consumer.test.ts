@@ -55,8 +55,8 @@ for(const product of productListUI)
 		// add customer information
 		await storePage.addCustomerInformation(customer);
 		await expect(storePage.purchaseModalLabel, 'Should modal finalize purchase be visible').toContainText('Finalize Purchase');
-		
-		// vverify receipt contains expeced message
+
+		// verify receipt contains expeced message
 		await expect.soft(storePage.purchaseModalLabel, 'Should modal finalize purchase be visible').toContainText('Finalize Purchase');
 		await expect.soft(storePage.receiptSubTitle, 'Should modal subtitle be receipt').toContainText('Receipt');
 		await expect.soft(storePage.receiptItems, 'Should receipt items include selected product').toContainText(`${quantity} x ${product.name} - $${grandTotal}`);

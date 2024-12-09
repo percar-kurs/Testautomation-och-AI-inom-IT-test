@@ -96,5 +96,4 @@ export class StorePage
 	{
 		await this.confirmPurchaseButton.click();
 	}
-
 }
