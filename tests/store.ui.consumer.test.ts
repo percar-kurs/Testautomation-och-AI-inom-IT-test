@@ -71,7 +71,9 @@ for(const product of productListUI)
 		// should result in empty cart and an updated balance
 		const updatedMonyBalance = await storePage.moneyBalance.textContent();
 		await expect(storePage.totalSum, 'Should be no ongoing purchase, cart is emtpy').toContainText('0');
-		await expect(updatedMonyBalance, 'Should new moneybalance after purchase be updated').toEqual(Number(initialMonyBalance) - Number(grandTotal));
+
+		const expectedMoneyBalance = Number(initialMonyBalance) - Number(grandTotal);
+		await expect(updatedMonyBalance, `Expected the money balance to be ${expectedMoneyBalance} after the purchase, but got ${updatedMonyBalance}.`).toBe(String(expectedMoneyBalance));
 
 	});
 }
