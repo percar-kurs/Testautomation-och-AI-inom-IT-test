@@ -47,6 +47,7 @@ export class StorePage
 		this.amountInput = page.getByLabel('Amount');
 		this.addToCartButton = page.getByTestId('add-to-cart-button');
 		this.productList = page.locator('#productList');
+
 		this.buyButton = page.getByRole('button', { name: 'Buy' });
 		this.finalizePurchaseHeading = page.getByRole('heading', { name: 'Finalize Purchase' });
 		this.nameInput = page.getByLabel('Name:');
@@ -70,18 +71,6 @@ export class StorePage
 	}
 
 
-	async verifyProductExistsInProductSelect(productName: string)
-	{
-		const selectableProductsOptions = await this.selectProductDropdown.locator('option').allTextContents();
-		expect(selectableProductsOptions, 'Product name should exist in the dropdown').toContain(productName);
-	}
-	async verifyProductAndPriceInProductList(productName: string, price: number)
-	{
-		const productRow = this.productList.locator('tr', { hasText: productName });
-		const productPrice = productRow.locator('td:nth-child(2)');
-		expect(productPrice, 'Should product and price exist in product list').toContainText(String(price));
-	}
-
 	async addProductToCart(productName: string, quantity: number)
 	{
 		await this.selectProductDropdown.selectOption({ label: `${productName}` });
@@ -90,25 +79,6 @@ export class StorePage
 		await expect(this.buyMessage, 'Should a message be displayed of selected products').toContainText(`Added ${quantity} x ${productName} to cart.`)
 	}
 
-	async verifyProductInCart(productName: string, price: number, quantity: number)
-	{
-		const productNameLocator = this.page.getByTestId(`${productName}-receipt-name`);
-		const productAmountLocator = this.page.getByTestId(`${productName}-receipt-quantity`);
-		const productPriceLocator = this.page.getByTestId(`${productName}-receipt-price`);
-
-		// ok with expect in POM?
-		await expect.soft(productNameLocator, 'Should product name be in cart').toContainText(productName);
-		await expect.soft(productAmountLocator, 'Should selected amout be in cart').toContainText(String(quantity));
-		await expect.soft(productPriceLocator, 'Should calculated product total price be correct in cart').toContainText(String(price * quantity));
-	}
-
-
-	async verifyCartTotalSum(totalSum: number, totalVAT: number, grandTotal: number)
-	{
-		await expect.soft(this.totalSum, 'Should cart total be correct').toContainText(String(totalSum));
-		await expect.soft(this.totalVAT, 'Should cart total VAT be correct').toContainText(String(totalVAT));
-		await expect.soft(this.grandTotal, 'Should cart grand Total be correct').toContainText(String(grandTotal));
-	}
 	async cartCheckout()
 	{
 		await this.buyButton.click();
@@ -120,19 +90,6 @@ export class StorePage
 		await this.nameInput.fill(customer.name);
 		await this.addressInput.fill(customer.address);
 		await this.confirmPurchaseButtonAddress.click();
-	}
-
-	async verifyCustomerReceipt(customer, product, grandTotal, totalVAT, quantity)
-	{
-		await expect.soft(this.purchaseModalLabel, 'Should modal finalize purchase be visible').toContainText('Finalize Purchase');
-		await expect.soft(this.receiptSubTitle, 'Should modal subtitle be receipt').toContainText('Receipt');
-		await expect.soft(this.receiptItems, 'Should receipt items include selected product').toContainText(`${quantity} x ${product.name} - $${grandTotal}`);
-		await expect.soft(this.receiptName, 'Should a thank you message with customer name be displayd').toContainText(`Thank you for your purchase, ${customer.name}`);
-		await expect.soft(this.receiptAddress, 'Should customers shipping address be displayed').toContainText(`It will be shipped to: ${customer.address}`);
-
-		await expect.soft(this.receiptTotal, 'Should receipt total be correct').toContainText(String('$' + grandTotal));
-		await expect.soft(this.receiptVAT, 'Should receipt VAT be correct').toContainText(String('$' + totalVAT));
-		await expect.soft(this.receiptGrandTotal, 'Should receipt grand total be Correct').toContainText('$' + String(grandTotal));
 	}
 
 	async closeReceipt()
